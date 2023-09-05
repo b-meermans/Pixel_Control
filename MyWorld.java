@@ -25,7 +25,9 @@ public class MyWorld extends World
         GreenfootImage bg = getBackground();
         for (int x = 0; x < bg.getWidth(); x++) {
             for (int y = 0; y < bg.getHeight(); y++) {
-                bg.setColorAt(x, y, getClosestColor(x, y, players, controlCount));
+                int closestIndex = getClosestPlayerIndex(x, y, players);
+                controlCount[closestIndex]++;  
+                bg.setColorAt(x, y, players.get(closestIndex).getColor());
             }
         }        
     }
@@ -40,8 +42,8 @@ public class MyWorld extends World
         }
     }
     
-    public Color getClosestColor(int x, int y, List<Player> players, int[] controlCount) {
-        int bestPlayer = 0;
+    public int getClosestPlayerIndex(int x, int y, List<Player> players) {
+        int bestPlayerIndex = 0;
         double bestDistance = Double.MAX_VALUE;
         
         for (int i = 0; i < players.size(); i++) {
@@ -49,12 +51,11 @@ public class MyWorld extends World
             double currentDistanceSquared = currentDistanceSquared(x, y, p.getX(), p.getY());
             if (currentDistanceSquared < bestDistance) {
                 bestDistance = currentDistanceSquared;
-                bestPlayer = i;
+                bestPlayerIndex = i;
             }
         }
-        
-        controlCount[bestPlayer]++;        
-        return players.get(bestPlayer).getColor();
+              
+        return bestPlayerIndex;
     }
     
     public double currentDistanceSquared(int x1, int y1, int x2, int y2) {

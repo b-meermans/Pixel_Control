@@ -3,8 +3,7 @@ import java.util.Random;
 
 public class Player extends SmoothMover {
     private static int nextPlayerNum = 1;
-    private static int nextGreenValue = 255;
-
+    
     private static int START_COLOR_VAL = 100;
     private static final double FRICTION_MULTIPLIER = 0.93;
     private static final double FORCE = 0.2;
@@ -33,15 +32,18 @@ public class Player extends SmoothMover {
         this.keyRight = keyRight;
         this.playerNum = nextPlayerNum++;
  
+        setupImageColor();
+        
+        setRotation((int)(Math.random() * 256));
+    }
+    
+    private void setupImageColor() {
         GreenfootImage img = getImage();
-        Random rand = new Random();
         color = new Color(getNextColorVal(), getNextColorVal(), getNextColorVal());
         img.setColor(color);
         
         img.drawString(Integer.toString(playerNum), img.getWidth() / 3, img.getHeight() / 2);
         setImage(img);
-        
-        setRotation(rand.nextInt(256));
     }
     
     public void act() {
