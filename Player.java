@@ -18,6 +18,10 @@ public class Player extends SmoothMover {
     private String keyDown;
     private String keyRight;
     
+    public static void reset() {
+        nextPlayerNum = 1;
+    }
+    
     public Player() {
         this("w", "a", "s", "d");
     }
